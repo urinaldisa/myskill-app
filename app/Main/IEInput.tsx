@@ -1,11 +1,14 @@
-import { View, Text } from 'react-native'
 import React from 'react'
+import { Div } from 'react-native-magnus'
+import StackHeader from '../../src/components/header/stackHeader'
+import IEForm from '../../src/form/IEForm'
 
 const IEInput = () => {
   return (
-    <View>
-      <Text>IEInput</Text>
-    </View>
+   <Div flex={1}>
+    <StackHeader label="IE Input"/>
+    <IEForm />
+   </Div>
   )
 }
 

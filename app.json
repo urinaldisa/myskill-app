@@ -28,6 +28,21 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "ebb14321-e111-4a1f-88ae-a258bdbd8799"
+      }
+    },
+    "owner": "moozarttt",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/ebb14321-e111-4a1f-88ae-a258bdbd8799"
+    }
   }
 }
