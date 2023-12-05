@@ -52,7 +52,7 @@ const Maintenance = () => {
         </ScrollDiv>
       </Div>
       <Div bg='white'>
-      <Button mb={heightPercentageToDP(5)} bg='#429669' alignSelf='center' w={widthPercentageToDP(80)}>
+      <Button mb={heightPercentageToDP(5)} bg='#429669' alignSelf='center' w={widthPercentageToDP(90)}>
         Submit
       </Button>
       </Div>
