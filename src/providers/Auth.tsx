@@ -1,78 +1,75 @@
-import React, { useContext, useEffect, useState } from "react"
-import useStorageState from "./useStorageState"
+import React, { useContext, useEffect, useState } from "react";
+import { queryClient } from "./query";
+import useStorageState from "./useStorageState";
 
 
 export type AuthType = {
-  jwt?: string
-}
+  jwt?: string;
+};
 
 const initialData: AuthType = {
   jwt: undefined,
-}
-
+};
 
 type ProviderType = {
-  loggedIn: boolean
-  data: AuthType
-  onLogin: (jwt: string) => void
-  saveData: (User: any) => void
-  onLogout: () => void
-  isLoading: boolean
-}
+  loggedIn: boolean;
+  data: AuthType;
+  profile: any;
+  onLogin: (jwt: string) => void;
+  onLogout: () => void;
+  onSetProfile: (value: any) => void;
+  isLoading: boolean;
+};
 
 export const AuthContext = React.createContext<ProviderType>({
   loggedIn: true,
   data: { jwt: "" },
-  onLogin: () => {},
-  saveData: () => {},
-  onLogout: () => {},
+  profile: {value : {}},
+  onLogin: () => { },
+  onLogout: () => { },
+  onSetProfile: () => { },
   isLoading: true,
-})
+});
 
 export const useAuth = () => {
-  return useContext(AuthContext)
-}
+  return useContext(AuthContext);
+};
 
-export const AuthConsumer = AuthContext.Consumer
+export const AuthConsumer = AuthContext.Consumer;
 
-export const AuthProvider = (props: { children: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined }) => {
-  const [data, setData] = useStorageState<AuthType>("auth", initialData)
-  const [isLoading, setIsLoading] = useState(true)
-  const [userData, setUserData] = useStorageState<User>("user", initialUserData)
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [data, setData] = useStorageState<any>("auth", {
+    defaultValue: initialData,
+  })
+  const [profile, setProfile] = useStorageState<any>("profile", {
+    defaultValue: {},
+  })
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!!data && data.jwt !== undefined) {
-      setIsLoading(false)
-    }
-  }, [data, setIsLoading])
+    setIsLoading(false);
+  }, [setIsLoading]);
+  const onLogin = (newJwt: string) => {
+    setData((prevData: any) => ({ ...prevData, jwt: newJwt }));
+  };
+  const onSetProfile = (value: any) => {
+    setProfile((prevData: any) => ({ ...prevData, value: value }));
+  };
 
-//   const onLogin = (newJwt) => {
-//     setData((prevData) => ({ ...prevData, jwt: newJwt }))
-//   }
-  const saveData = (userData: any) => {
-    setUserData(userData)
-  }
-//   const onLogout = () => {
-//     setData((prevData) => ({ ...prevData, jwt: null }))
-//     // Clear all API cache. Makes sure we have correct data
-//     // queryClient.clear()
-//   }
+  const onLogout = () => {
+    setData((prevData: any) => ({ ...prevData, jwt: undefined }));
+    // Clear all API cache. Makes sure we have correct data
+    queryClient.clear();
+  };
 
-  const loggedIn = !!data.jwt && data.jwt !== ""
+  const loggedIn = !!data.jwt && data.jwt !== "";
 
   return (
     <AuthContext.Provider
-      value={{
-        loggedIn,
-        data,
-        // userData,
-        // onLogin,
-        saveData,
-        // onLogout,
-        isLoading,
-      }}
+      value={{ loggedIn, data, onLogin, onLogout, onSetProfile, profile, isLoading }}
     >
-      {props.children}
+      {children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

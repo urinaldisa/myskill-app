@@ -8,7 +8,7 @@ const Select = ({
   setVisible,
   bg = "white",
   isLoading = false,
-  title = null,
+  title = "",
   message = null,
   multiple = false,
   data = [],

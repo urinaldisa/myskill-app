@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from 'expo-router'
 import React, { useState } from 'react'
 import { Button, Div, Input, ScrollDiv, Text } from 'react-native-magnus'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
@@ -8,6 +9,8 @@ import MachineDowntimePicker from '../../src/components/MachineDowntimePicker'
 
 const Maintenance = () => {
   const [machine, setMachine] = useState("")
+  const { id} = useLocalSearchParams();
+  console.warn(id)
   return (
     <>
       <Div flex={1} bg='white'>

@@ -7,7 +7,7 @@ import formatDuration from '../helper/timeFormatter'
 const CycleList = ({ value, setValue }: any) => {
 
     const renderItem = ({ item, index }: any) => {
-        const { originalDuration, formattedDuration } = formatDuration(item);
+        const { formattedDuration } = formatDuration(item);
         const handleDelete = () => {
             setValue(value.filter((e: number) => e !== item))
         }

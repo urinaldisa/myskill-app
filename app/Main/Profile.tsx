@@ -1,9 +1,14 @@
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { Button, Div, Icon, Text } from 'react-native-magnus'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import ProfileHeaders from '../../src/components/header/profileHeader'
+import { useAuth } from '../../src/providers/Auth'
 
 const Profile = () => {
+    const {onLogout} = useAuth()
+    const router = useRouter();
+
     return (
         <Div flex={1}>
             <ProfileHeaders />
@@ -140,6 +145,10 @@ const Profile = () => {
                         </Div>
                     </Button>
                     <Button
+                        onPress={() => {
+                            onLogout()
+                            router.replace('/')
+                        }}
                         bg="white"
                         px={20}
                         prefix={

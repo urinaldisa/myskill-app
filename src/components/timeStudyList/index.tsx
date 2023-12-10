@@ -2,21 +2,29 @@ import React from 'react'
 import { Div, Text } from 'react-native-magnus'
 import { FlatList } from 'react-native'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
+import useGetIEList from '../../api/IEModule/useGetIEList'
+import moment from 'moment'
+import formatDuration from '../../helper/timeFormatter'
 
 const TimeStudyList = () => {
-    const data = [1,2,3,4,5]
-    const renderItem = () => (
+    const { data, refetch, isLoading } = useGetIEList({});
+    const dataList = data?.pages.flatMap((page) => page.data);
+
+    console.log(dataList)
+    const renderItem = ({item}:any) => {
+        const { formattedDuration } = formatDuration(item?.result);
+    return (
         <Div rounded={10} justifyContent='space-between' alignItems='center' px={15} row w={widthPercentageToDP(90)} mb={10} alignSelf='center' h={heightPercentageToDP(10)} bg='#E3E9FC'>
-            <Div>
-            <Text fontSize={16} fontWeight='500'>Aris sudaryanto</Text>
-            <Text>CUT9877 - Cutting Beam</Text>
+            <Div w={widthPercentageToDP(40)}>
+            <Text fontSize={16} fontWeight='500'>{item?.operator?.name}</Text>
+            <Text>{item?.process?.name}</Text>
             </Div>
-            <Div>
-            <Text textAlign='right' fontSize={16} fontWeight='500'>32,03s</Text>
-            <Text textAlign='right'>Captured on 18 Aug 17:03</Text>
+            <Div  w={widthPercentageToDP(40)}>
+            <Text textAlign='right' fontSize={16} fontWeight='500'>{formattedDuration}</Text>
+            <Text textAlign='right'>Captured on {moment(item?.created_at).format("DD MMM HH:mm")}</Text>
             </Div>
         </Div>
-    )
+    )}
     const headerComponent = () => (
         <Div mb={20} row px={20} justifyContent='space-between'>
             <Text fontWeight='600'>Latest Time Study</Text>
@@ -25,7 +33,7 @@ const TimeStudyList = () => {
     )
   return (
    <Div mt={10}>
-    <FlatList ListHeaderComponent={headerComponent} data={data} renderItem={renderItem}/>
+    <FlatList ListHeaderComponent={headerComponent} data={dataList} renderItem={renderItem}/>
    </Div>
   )
 }

@@ -4,9 +4,11 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 import { Pressable } from 'react-native'
 import { COLOR_PRIMARY } from '../../helper/theme'
 import { useRouter } from 'expo-router'
+import { useAuth } from '../../providers/Auth'
 
 const Headers = () => {
     const router = useRouter()
+    const {profile} = useAuth()
     return (
         <>
             <Div minH={heightPercentageToDP(10)} mx={20} row alignItems='center' justifyContent='space-between'>
@@ -14,7 +16,7 @@ const Headers = () => {
                     <Div mr={10} w={40} h={40} rounded={20} bg='white' />
                     <Div>
                         <Text fontSize={16} color='white'>Good Morning</Text>
-                        <Text fontSize={16} fontWeight='bold' color='white'>Aris Sudaryanto</Text>
+                        <Text fontSize={16} fontWeight='bold' color='white'>{profile.value.name}</Text>
                     </Div>
                 </Div>
                 <Pressable onPress={() => router.push('/Main/Profile')}>

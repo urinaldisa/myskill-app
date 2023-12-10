@@ -20,7 +20,9 @@ const Homescreen = () => {
                     <Button onPress={() => router.push('/Main/IEInput')} bg='#fdf6d0' py={20} w={widthPercentageToDP(40)}>
                         <Text>IEE INPUT</Text>
                     </Button>
-                    <Button onPress={() => router.push('/Main/Maintenance')} bg='#afe1c9'  py={20} w={widthPercentageToDP(40)}>
+                    <Button onPress={() => router.push({pathname: '/Main/Maintenance', params: {
+                        id: 10
+                    }})} bg='#afe1c9'  py={20} w={widthPercentageToDP(40)}>
                         <Text>Maintenance</Text>
                     </Button>
                     </Div>
