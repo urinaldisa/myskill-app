@@ -22,7 +22,6 @@ const OperatorPicker = ({ value, onSelect }: PropTypes) => {
     const { data:dataList, refetch, isLoading } = useOperatorList({});
     const operatorData = dataList?.pages.flatMap((page) => page.data);
     const found = operatorData?.find((e) => e.id.toString() === value);
-    console.log(found,'test')
     return (
         <Div mt={20}>
             <Text mb={10} fontWeight='500'>Operator <Text color='red'>*</Text></Text>

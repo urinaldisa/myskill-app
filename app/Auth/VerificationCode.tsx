@@ -7,7 +7,7 @@ import useLoginMutation from '../../src/api/Auth/useLoginMutation';
 
 
 const VerificationCode = () => {
-  const { mutateAsync } = useLoginMutation();
+  const { mutateAsync , isLoading } = useLoginMutation();
   const [pin, setPin] = useState("")
   const { email } = useGlobalSearchParams();
   const handleLogin = () => {
@@ -35,7 +35,7 @@ const VerificationCode = () => {
         }}
         length={6} />
       </Div>
-      <Button onPress={() => handleLogin()} bg='#429669' mb={20} w={widthPercentageToDP(90)} alignSelf='center'>
+      <Button loading={isLoading} onPress={() => handleLogin()} bg='#429669' mb={20} w={widthPercentageToDP(90)} alignSelf='center'>
         Submit
       </Button>
     </Div>

@@ -3,6 +3,7 @@ import { Button, Div, Icon, Text } from "react-native-magnus";
 import {
     widthPercentageToDP
 } from "react-native-responsive-screen";
+import useStyleList from "../../api/IEModule/useStyleList";
 import { COLOR_DISABLED, COLOR_PLACEHOLDER } from "../../helper/theme";
 import { Select } from "../select";
 
@@ -15,11 +16,12 @@ type PropTypes = {
 
 const StylePicker = ({ value, onSelect }: PropTypes) => {
     const [key, setKey] = useState("");
-    const [data, setData] = useState([]);
     const [selected, setSelected] = useState();
     const [visible, setVisible] = useState(false);
     const selectRef = React.createRef();
-    const found = data.find((e) => e.id.toString() === value);
+    const { data:dataList, refetch, isLoading } = useStyleList({});
+    const styleData = dataList?.pages.flatMap((page) => page.data);
+    const found = styleData?.find((e) => e.id.toString() === value);
 
     return (
         <Div mt={20}>
@@ -42,7 +44,7 @@ const StylePicker = ({ value, onSelect }: PropTypes) => {
                 />)}
             >
                 <Text w={widthPercentageToDP(82)} color={!found ? "grey" : "#000"}>
-                    {!found ? "Please selecet machine dawntime" : found?.name}
+                    {!found ? "Please select style" : found?.name}
                 </Text>
             </Button>
             <Select
@@ -50,8 +52,8 @@ const StylePicker = ({ value, onSelect }: PropTypes) => {
                 setVisible={setVisible}
                 onSelect={onSelect}
                 value={selected}
-                title="Machine Dawntime"
-                data={!!data ? data : []}
+                title="Select Style"
+                data={!!styleData ? styleData : []}
                 keyExtractor={(_, idx: number) => idx.toString()}
                 renderItem={(item: { id: { toString: () => any; }; name: any; }, index: any) => (
                     <Select.Option

@@ -19,17 +19,17 @@ import {
     currentPage: number;
   }
   
-  const useOperatorList = (
+  const useStyleList = (
     params?: any,
     options?: UseInfiniteQueryOptions<ApiResponse>
   ): UseInfiniteQueryResult<ApiResponse> => {
     const api = useAxios();
   
     return useInfiniteQuery<ApiResponse>(
-      "OperatorList",
+      "StyleList",
       ({ pageParam = 1 }) => {
         return api
-          .get("operator", {
+          .get("style", {
             params: {
               ...params,
             },
@@ -64,5 +64,5 @@ import {
     );
   };
   
-  export default useOperatorList;
+  export default useStyleList;
   

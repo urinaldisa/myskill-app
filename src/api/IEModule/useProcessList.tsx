@@ -19,22 +19,24 @@ import {
     currentPage: number;
   }
   
-  const useOperatorList = (
+  const useProcessList = (
+    id: number,
     params?: any,
     options?: UseInfiniteQueryOptions<ApiResponse>
   ): UseInfiniteQueryResult<ApiResponse> => {
     const api = useAxios();
   
     return useInfiniteQuery<ApiResponse>(
-      "OperatorList",
+      "ProcessList",
       ({ pageParam = 1 }) => {
         return api
-          .get("operator", {
+          .get(`process/style-process/${id}`, {
             params: {
               ...params,
             },
           })
           .then((res) => {
+            console.log(res)
             const data = res.data.data as ApiResponse;
             return data;
             //DEBT: DOCS RESULT
@@ -44,8 +46,11 @@ import {
             //       // map the user properties to your own interface here
             //     })),
             //   };
-          });
+          })
       },
+      {
+        refetchOnWindowFocus: false
+      }
     //   {
     //     getNextPageParam: (lastQuery, pages) => {
     //       // Error
@@ -64,5 +69,5 @@ import {
     );
   };
   
-  export default useOperatorList;
+  export default useProcessList;
   
