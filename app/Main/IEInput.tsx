@@ -5,7 +5,7 @@ import IEForm from '../../src/form/IEForm'
 
 const IEInput = () => {
   return (
-   <Div flex={1}>
+   <Div flex={1} bg='white'>
     <StackHeader label="IE Input"/>
     <IEForm />
    </Div>

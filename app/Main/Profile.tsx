@@ -50,6 +50,7 @@ const Profile = () => {
                     <Button
                         bg="white"
                         px={20}
+                        onPress={() => router.push('/Main/Configuration')}
                         prefix={
                             <Icon
                             rounded="circle"

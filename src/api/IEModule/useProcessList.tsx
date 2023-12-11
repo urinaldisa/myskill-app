@@ -49,7 +49,8 @@ import {
           })
       },
       {
-        refetchOnWindowFocus: false
+        refetchOnWindowFocus: false,
+        enabled: false
       }
     //   {
     //     getNextPageParam: (lastQuery, pages) => {

@@ -6,7 +6,6 @@ const MainStack = () => {
     <Stack
       screenOptions={{
         headerShown: false,
-
       }}
     />
   )

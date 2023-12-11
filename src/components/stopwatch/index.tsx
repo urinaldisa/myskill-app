@@ -6,7 +6,7 @@ import { heightPercentageToDP } from 'react-native-responsive-screen';
 import { COLOR_PRIMARY } from '../../helper/theme';
 
 const Stopwatch = ({ value, setValue, setVisible }: any) => {
-    const [statePause, setStatePause] = useState(false)    
+    const [statePause, setStatePause] = useState(false)
     const stopwatchRef = useRef<StopwatchTimerMethods>(null);
     // Methods to control the stopwatch
     function play() {
@@ -24,10 +24,15 @@ const Stopwatch = ({ value, setValue, setVisible }: any) => {
     const handleButtonClick = () => {
         // Use the spread operator to create a new array with the existing values
         // and add the new value at the end.
-        setValue([...value, stopwatchRef.current?.getSnapshot()]);
+        setValue([...value, {
+            time: stopwatchRef.current?.getSnapshot(),
+            qty: 1,
+
+        }]);
     };
+
     useEffect(() => {
-        if(!statePause){
+        if (!statePause) {
             play()
         }
         return

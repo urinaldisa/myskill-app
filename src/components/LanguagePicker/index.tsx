@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Div, Icon, Text } from "react-native-magnus";
 import {
     widthPercentageToDP
 } from "react-native-responsive-screen";
-import useProcessList from "../../api/IEModule/useProcessList";
+import useStyleList from "../../api/IEModule/useStyleList";
 import { COLOR_DISABLED, COLOR_PLACEHOLDER } from "../../helper/theme";
 import { Select } from "../select";
 
@@ -12,36 +12,47 @@ type PropTypes = {
     onSelect: (value: any) => void;
     disabled?: boolean;
     flex?: boolean;
-    styleId: string
 };
 
-const ProcessPicker = ({ value, onSelect, styleId, disabled }: PropTypes) => {
+const LanguagePicker = ({ value, onSelect }: PropTypes) => {
     const [key, setKey] = useState("");
-    const [data, setData] = useState([]);
     const [selected, setSelected] = useState();
     const [visible, setVisible] = useState(false);
     const selectRef = React.createRef();
-    const { data: dataList, refetch, isLoading } = useProcessList(parseInt(styleId),{});
-    const processData = dataList?.pages.flatMap((page) => page.data);
-    const found = processData?.find((e) => e.id === value?.id);
-    useEffect(() => {
-        refetch()
-    },[styleId])
+    const languageData = [
+        {
+            name: 'indonesia',
+            id: 1
+        },
+        {
+            name: 'Malaysia',
+            id: 2
+        },
+        {
+            name: 'Thailand',
+            id: 3
+        },
+        {
+            name: 'Philipines',
+            id: 4
+        },
+    ]
+    const found = languageData?.find((e) => e.id.toString() === value);
+
     return (
         <Div mt={20}>
-            <Text mb={10} fontWeight='500'>Process <Text color='red'>*</Text></Text>
+            <Text mb={10} fontWeight='500'>Language</Text>
             <Button
                 borderWidth={0.2}
                 bg="#F5F8FA"
                 block
                 mt={5}
-                disabled={disabled}
                 color={selected ? "primary" : COLOR_PLACEHOLDER}
                 justifyContent="flex-start"
                 rounded={6}
                 borderColor="#cbd5e0"
                 onPress={() => setVisible(!visible)}
-                suffix={( <Icon
+                suffix={(  <Icon
                     rounded="circle"
                     name="search"
                     fontSize={18}
@@ -49,7 +60,7 @@ const ProcessPicker = ({ value, onSelect, styleId, disabled }: PropTypes) => {
                 />)}
             >
                 <Text w={widthPercentageToDP(82)} color={!found ? "grey" : "#000"}>
-                    {!found ? "Please selecet style Process" : found?.process?.name}
+                    {!found ? "Please select Language" : found?.name}
                 </Text>
             </Button>
             <Select
@@ -57,17 +68,17 @@ const ProcessPicker = ({ value, onSelect, styleId, disabled }: PropTypes) => {
                 setVisible={setVisible}
                 onSelect={onSelect}
                 value={selected}
-                title="Select style Process"
-                data={!!processData ? processData : []}
+                title="Select language"
+                data={!!languageData ? languageData : []}
                 keyExtractor={(_, idx: number) => idx.toString()}
                 renderItem={(item: { id: { toString: () => any; }; name: any; }, index: any) => (
                     <Select.Option
-                        value={item}
+                        value={item?.id?.toString()}
                         p={20}
                         borderBottomWidth={0.8}
                         borderBottomColor={COLOR_DISABLED}
                     >
-                        {item?.process?.name}
+                        {item.name}
                     </Select.Option>
                 )}
             />
@@ -75,4 +86,4 @@ const ProcessPicker = ({ value, onSelect, styleId, disabled }: PropTypes) => {
     );
 };
 
-export default ProcessPicker;
+export default LanguagePicker;

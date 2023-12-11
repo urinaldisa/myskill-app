@@ -19,7 +19,6 @@ const Intro = () => {
             >
                 <Div alignItems='center' top={heightPercentageToDP(-15)} >
                     <Image source={require('../assets/logo/loginLogo.png')} h={heightPercentageToDP(15)} w={widthPercentageToDP(40)} resizeMode='contain' />
-                    <Text fontWeight='bold'>Skill Evaluation System</Text>
                 </Div>
                 <Div>
                     <Text fontSize={20} fontWeight='bold' mb={heightPercentageToDP(5)}>Login</Text>

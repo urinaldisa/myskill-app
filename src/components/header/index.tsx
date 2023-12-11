@@ -5,17 +5,20 @@ import { Pressable } from 'react-native'
 import { COLOR_PRIMARY } from '../../helper/theme'
 import { useRouter } from 'expo-router'
 import { useAuth } from '../../providers/Auth'
+import { useGetProfile } from '../../api/Auth/useGetProfile'
 
 const Headers = () => {
     const router = useRouter()
     const {profile} = useAuth()
+    const { data: statData, isLoading, isFetching, refetch } = useGetProfile({});
+    console.log(statData?.data?.statistics,'stat')
     return (
         <>
             <Div minH={heightPercentageToDP(10)} mx={20} row alignItems='center' justifyContent='space-between'>
                 <Div row alignItems='center'>
                     <Div mr={10} w={40} h={40} rounded={20} bg='white' />
                     <Div>
-                        <Text fontSize={16} color='white'>Good Morning</Text>
+                        <Text fontSize={16} color='white'>Welcome</Text>
                         <Text fontSize={16} fontWeight='bold' color='white'>{profile.value.name}</Text>
                     </Div>
                 </Div>
@@ -52,7 +55,7 @@ const Headers = () => {
                 />
                 <Div>
                     <Text>Your Stats</Text>
-                    <Text fontWeight='bold' color={COLOR_PRIMARY} fontSize={16}>100 Time Study</Text>
+                    <Text fontWeight='bold' color={COLOR_PRIMARY} fontSize={16}>{statData?.data?.statistics?.total_transaction} Time Study</Text>
 
                 </Div>
             </Div>

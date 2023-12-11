@@ -12,7 +12,6 @@ const TimeStudyList = () => {
 
     console.log(dataList)
     const renderItem = ({item}:any) => {
-        const { formattedDuration } = formatDuration(item?.result);
     return (
         <Div rounded={10} justifyContent='space-between' alignItems='center' px={15} row w={widthPercentageToDP(90)} mb={10} alignSelf='center' h={heightPercentageToDP(10)} bg='#E3E9FC'>
             <Div w={widthPercentageToDP(40)}>
@@ -20,7 +19,7 @@ const TimeStudyList = () => {
             <Text>{item?.process?.name}</Text>
             </Div>
             <Div  w={widthPercentageToDP(40)}>
-            <Text textAlign='right' fontSize={16} fontWeight='500'>{formattedDuration}</Text>
+            <Text textAlign='right' fontSize={16} fontWeight='500'>{item.result}</Text>
             <Text textAlign='right'>Captured on {moment(item?.created_at).format("DD MMM HH:mm")}</Text>
             </Div>
         </Div>

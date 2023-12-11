@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Div, Icon, Text } from "react-native-magnus";
+import React, { useEffect, useState } from "react";
+import { Button, Div, Icon, Input, Text } from "react-native-magnus";
 import {
     widthPercentageToDP
 } from "react-native-responsive-screen";
@@ -19,9 +19,14 @@ const OperatorPicker = ({ value, onSelect }: PropTypes) => {
     const [selected, setSelected] = useState();
     const [visible, setVisible] = useState(false);
     const selectRef = React.createRef();
-    const { data:dataList, refetch, isLoading } = useOperatorList({});
+    const { data:dataList, refetch, isLoading } = useOperatorList({
+        search: key
+    });
     const operatorData = dataList?.pages.flatMap((page) => page.data);
-    const found = operatorData?.find((e) => e.id.toString() === value);
+    const found = operatorData?.find((e) => e.id === value?.id);
+    useEffect(() => {
+        refetch()
+    },[key])
     return (
         <Div mt={20}>
             <Text mb={10} fontWeight='500'>Operator <Text color='red'>*</Text></Text>
@@ -35,10 +40,10 @@ const OperatorPicker = ({ value, onSelect }: PropTypes) => {
                 rounded={6}
                 borderColor="#cbd5e0"
                 onPress={() => setVisible(!visible)}
-                suffix={(  <Icon
+                suffix={(   <Icon
                     rounded="circle"
-                    name="save"
-                    fontSize={20}
+                    name="search"
+                    fontSize={18}
                     fontFamily="FontAwesome"
                 />)}
             >
@@ -51,12 +56,28 @@ const OperatorPicker = ({ value, onSelect }: PropTypes) => {
                 setVisible={setVisible}
                 onSelect={onSelect}
                 value={selected}
+                message={
+                    <>
+                      <Text mb={5}>Please select Operator Name</Text>
+                      <Div row px={0} pt={10} bg="white">
+                <Input
+                  flex={1}
+                  placeholder={"Search by name"}
+                  focusBorderColor="primary"
+                  value={key}
+                  onChangeText={(val) => {
+                    setKey(val)
+                  }}
+                />
+              </Div>
+                    </>
+                  }
                 title="Select Operator"
                 data={!!operatorData ? operatorData : []}
                 keyExtractor={(_, idx: number) => idx.toString()}
                 renderItem={(item: { id: { toString: () => any; }; name: any; }, index: any) => (
                     <Select.Option
-                        value={item?.id?.toString()}
+                        value={item}
                         p={20}
                         borderBottomWidth={0.8}
                         borderBottomColor={COLOR_DISABLED}

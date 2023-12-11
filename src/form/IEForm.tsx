@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
-import { Button, Div, Icon, Input, ScrollDiv, Text } from 'react-native-magnus'
+import { Button, Div, Input, ScrollDiv, Text } from 'react-native-magnus'
 import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
 import Datepicker from '../components/datepicker'
 import OperatorPicker from '../components/OperatorPicker'
@@ -9,12 +9,14 @@ import StylePicker from '../components/StylePicker'
 
 const IEForm = () => {
     const router = useRouter()
-    const [operator, setOperator] = useState("")
-    const [style, setStyle] = useState("")
-    const [process, setProcess] = useState("")
-    console.warn(operator)
+    const [operator, setOperator] = useState<any>({})
+    const [style, setStyle] = useState<any>({})
+    const [proses, setProses] = useState<any>({})
+    const [rating, setRating] = useState('100')
+    const [allowance, setAllowance] = useState("0")
+    const [date, setDate] = useState<any>()
     return (
-        <ScrollDiv>
+        <ScrollDiv >
             <Div p={15} flex={1} bg='white'>
                 <OperatorPicker
                     value={operator}
@@ -26,22 +28,35 @@ const IEForm = () => {
                 />
                 <ProcessPicker
                     disabled={!style}
-                    value={process}
-                    onSelect={(value) => setProcess(value)} styleId={style} />
+                    value={proses}
+                    onSelect={(value) => setProses(value)}
+                    styleId={style?.id} />
                 <Div row justifyContent='space-between' mt={15}>
                     <Div>
-                        <Text mb={10} fontWeight='500'>Rating</Text>
-                        <Input keyboardType='numeric' placeholder='Input Rating' mb={20} w={widthPercentageToDP(45)} />
+                        <Text mb={10} fontWeight='500'>IE Rating</Text>
+                        <Input keyboardType='numeric' value={rating} onChangeText={(e) => setRating(e)} placeholder='Input IE Rating' mb={20} w={widthPercentageToDP(45)} />
                     </Div>
                     <Div>
-                        <Text mb={10} fontWeight='500'>Allowance</Text>
-                        <Input keyboardType='number-pad' placeholder='Input Allowance' mb={20} w={widthPercentageToDP(45)} />
+                        <Text mb={10} fontWeight='500'>Allowance(%)</Text>
+                        <Input keyboardType='number-pad' placeholder='Input Allowance' value={allowance} onChangeText={(e) => setAllowance(e)} mb={20} w={widthPercentageToDP(45)} />
                     </Div>
                 </Div>
                 <Text mb={10} fontWeight='500'>Date</Text>
-                <Datepicker placeholder='Select Date' onSelect={(e) => console.log(e)} value={''} />
+                <Datepicker placeholder='Select Date' onSelect={(val) => setDate(val)} value={date} />
             </Div>
-            <Button onPress={() => router.push('/Main/IEmain')} mb={heightPercentageToDP(5)} bg='#429669' w={'90%'} alignSelf='center'>
+            <Button disabled={operator === "" || style === "" || rating === "" || allowance === "" ? true : false} onPress={() => router.push({
+                pathname: '/Main/IEmain', params: {
+                    operator: operator?.name,
+                    operatorId: operator?.id,
+                    style: style?.name,
+                    styleId: style?.id,
+                    processId: proses?.id,
+                    proses: proses?.process?.name.replace(/[()]/g, ' '),
+                    allowance: allowance,
+                    rating: rating,
+                    date: date
+                }
+            })} mb={heightPercentageToDP(5)} bg='#429669' w={'90%'} alignSelf='center'>
                 Next
             </Button>
         </ScrollDiv>

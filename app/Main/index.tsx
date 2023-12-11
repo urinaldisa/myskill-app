@@ -18,7 +18,7 @@ const Homescreen = () => {
                     <Text fontSize={14} fontWeight='600' color={COLOR_PRIMARY}>Hi, apa yang akan anda lakukan hari ini ?</Text>
                     <Div mt={20} justifyContent='space-between' row>
                     <Button onPress={() => router.push('/Main/IEInput')} bg='#fdf6d0' py={20} w={widthPercentageToDP(40)}>
-                        <Text>IEE INPUT</Text>
+                        <Text>IE INPUT</Text>
                     </Button>
                     <Button onPress={() => router.push({pathname: '/Main/Maintenance', params: {
                         id: 10

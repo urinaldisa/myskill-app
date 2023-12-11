@@ -6,15 +6,14 @@ interface FormatDurationResult {
 }
 
 const formatDuration = (durationInMilliseconds: number): FormatDurationResult => {
-  const seconds = Math.floor(durationInMilliseconds / 1000);
-  const milliseconds = durationInMilliseconds % 1000;
-
-  const formattedDuration = `${seconds}.${milliseconds.toString().padStart(3, '0')}s`;
+  const seconds = durationInMilliseconds / 1000; // Convert milliseconds to seconds
+  const roundedSeconds = Number(seconds.toFixed(2));
 
   return {
     originalDuration: durationInMilliseconds,
-    formattedDuration,
+    formattedDuration: `${roundedSeconds}`,
   };
 };
+
 
 export default formatDuration;

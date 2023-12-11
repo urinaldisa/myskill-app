@@ -7,19 +7,27 @@ import formatDuration from '../helper/timeFormatter'
 const CycleList = ({ value, setValue }: any) => {
 
     const renderItem = ({ item, index }: any) => {
-        const { formattedDuration } = formatDuration(item);
+        const { formattedDuration } = formatDuration(item?.time);
         const handleDelete = () => {
             setValue(value.filter((e: number) => e !== item))
         }
+        const handleQtyChange = (event: any, index: any) => {
+            const newQty = parseInt(event);
+            setValue((prevItems: any) => {
+              const updatedDiscounts = [...prevItems];
+              updatedDiscounts[index] = { ...updatedDiscounts[index], qty: newQty };
+              return updatedDiscounts;
+            });
+          };
         return (
             <Div p={20} bg='#F4FAFF'>
                 <Div row justifyContent='space-between' borderBottomWidth={0.5} borderColor='#c4c4c4' >
                     <Div mb={10}>
-                        <Text mb={5}>TIME 1</Text>
+                        <Text mb={5}>TIMER</Text>
                         <Text fontWeight='600'>{formattedDuration}</Text>
                     </Div>
                     <Div row mb={10}>
-                        <Input defaultValue='1' keyboardType='numeric' prefix={(
+                        <Input value={item?.qty} defaultValue={item?.qty?.toString()} onChangeText={(e) => handleQtyChange(e, index)}  keyboardType='numeric' prefix={(
                             <Div pr={5} borderColor='#c4c4c4' borderRightWidth={1}>
                                 <Text>Qty</Text>
                             </Div>

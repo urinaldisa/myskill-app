@@ -28,7 +28,11 @@ const VerificationCode = () => {
         onFillEnded={otp => setPin(otp)}
         inputStyle={{
           width: 50,
-          height: 70
+          height: 70,
+          
+        }}
+        inputProps={{
+          secureTextEntry: true
         }}
         containerStyle={{
           backgroundColor: 'white',

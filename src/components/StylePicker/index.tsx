@@ -21,7 +21,7 @@ const StylePicker = ({ value, onSelect }: PropTypes) => {
     const selectRef = React.createRef();
     const { data:dataList, refetch, isLoading } = useStyleList({});
     const styleData = dataList?.pages.flatMap((page) => page.data);
-    const found = styleData?.find((e) => e.id.toString() === value);
+    const found = styleData?.find((e) => e.id === value?.id);
 
     return (
         <Div mt={20}>
@@ -38,8 +38,8 @@ const StylePicker = ({ value, onSelect }: PropTypes) => {
                 onPress={() => setVisible(!visible)}
                 suffix={(  <Icon
                     rounded="circle"
-                    name="save"
-                    fontSize={20}
+                    name="search"
+                    fontSize={18}
                     fontFamily="FontAwesome"
                 />)}
             >
@@ -57,7 +57,7 @@ const StylePicker = ({ value, onSelect }: PropTypes) => {
                 keyExtractor={(_, idx: number) => idx.toString()}
                 renderItem={(item: { id: { toString: () => any; }; name: any; }, index: any) => (
                     <Select.Option
-                        value={item?.id?.toString()}
+                        value={item}
                         p={20}
                         borderBottomWidth={0.8}
                         borderBottomColor={COLOR_DISABLED}
