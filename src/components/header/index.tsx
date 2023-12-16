@@ -11,7 +11,6 @@ const Headers = () => {
     const router = useRouter()
     const {profile} = useAuth()
     const { data: statData, isLoading, isFetching, refetch } = useGetProfile({});
-    console.log(statData?.data?.statistics,'stat')
     return (
         <>
             <Div minH={heightPercentageToDP(10)} mx={20} row alignItems='center' justifyContent='space-between'>

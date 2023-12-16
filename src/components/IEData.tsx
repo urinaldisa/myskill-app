@@ -10,7 +10,7 @@ const IEData = ({average, result}:any) => {
   const { formattedDuration } = formatDuration(average || 0);
   const { formattedDuration: resultTime } = formatDuration((average * allowance) / 100 || average || 0);
   return (
-   <Div p={20} >
+   <Div p={20} bg='white'>
           <Text mb={10} fontSize={14} fontWeight='500'>Operator </Text>
         <Text mb={10} fontSize={14} color='#929292'>{operator} </Text>
         <Div row justifyContent='space-between'>

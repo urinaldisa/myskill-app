@@ -1,6 +1,5 @@
 import { useRouter } from "expo-router";
-import { useMutation } from "react-query";
-import { useAuth } from "../../providers/Auth";
+import { useMutation, useQueryClient } from "react-query";
 import { useAxios } from "../useApi";
 
 
@@ -18,6 +17,8 @@ type ParamType = {
 const useIEInputMutation = () => {
   const api = useAxios();
   const router = useRouter();
+  const queryClient = useQueryClient();
+
   return useMutation(({ operator, style, process, allowance, average,result,cycle_time,date }: ParamType) => {
     return api
       .post(`ie-input`, {
@@ -31,6 +32,10 @@ const useIEInputMutation = () => {
       })
       .then((res) => {
         console.log(res)
+        queryClient.invalidateQueries("IEList");
+        queryClient.invalidateQueries("userMe");
+        router.push('/Main')
+
       })
       .catch((err) => {
         console.log(err)

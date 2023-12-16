@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
-import { Button, Div, Icon, Modal, Text } from 'react-native-magnus'
-import { heightPercentageToDP } from 'react-native-responsive-screen'
-import { TouchableOpacity } from 'react-native';
+import { Button, Div, Icon, Overlay, Text, Modal } from 'react-native-magnus'
+import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsive-screen'
+import { ActivityIndicator, TouchableOpacity } from 'react-native';
 import Stopwatch from '../stopwatch';
 import useIEInputMutation from '../../api/IEModule/useIEInputMutation';
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import formatDuration from '../../helper/timeFormatter';
 import moment from 'moment';
+import { COLOR_DISABLED, COLOR_GREEN } from '../../helper/theme';
 
-const BottomTab = ({ value, setValue, sumData }: any) => {
-    const [visible, setVisible] = useState(false);
+const BottomTab = ({ value, setValue, sumData, visible, setVisible }: any) => {
     const { formattedDuration } = formatDuration(sumData / value.length || 0);
-
+    const [overlayVisible, setOverlayVisible] = useState(false);
     const { mutateAsync, isLoading } = useIEInputMutation();
     const { operatorId, processId, allowance, date } = useLocalSearchParams();
     const { formattedDuration: resultTime } = formatDuration((sumData * allowance) / 100 || sumData / value.length || 0);
@@ -24,7 +24,6 @@ const BottomTab = ({ value, setValue, sumData }: any) => {
             qty: e.qty
         }
     })
-    console.log(rawData,'data')
     const handleSubmit = () => {
         mutateAsync({
             operator: operatorId,
@@ -38,7 +37,7 @@ const BottomTab = ({ value, setValue, sumData }: any) => {
     }
     return (
         <>
-            <Div bg='white' p={20} row justifyContent='space-around' minH={heightPercentageToDP(10)}>
+            <Div style={{ elevation: 0 }} bg='white' p={20} row justifyContent='space-around' minH={heightPercentageToDP(10)}>
                 <TouchableOpacity onPress={() => setValue([])}>
                     <Div alignItems='center' >
                         <Icon
@@ -50,7 +49,7 @@ const BottomTab = ({ value, setValue, sumData }: any) => {
                         <Text>Reset</Text>
                     </Div>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setVisible(!visible)}>
+                <TouchableOpacity onPress={() => router.push('/Main/StopwatchPage')}>
                     <Div>
                         <Icon
                             color='green'
@@ -61,7 +60,7 @@ const BottomTab = ({ value, setValue, sumData }: any) => {
                         />
                     </Div>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={handleSubmit}>
+                <TouchableOpacity onPress={() => setOverlayVisible(true)}>
                     <Div alignItems='center' >
                         <Icon
                             rounded="circle"
@@ -73,22 +72,40 @@ const BottomTab = ({ value, setValue, sumData }: any) => {
                     </Div>
                 </TouchableOpacity>
             </Div>
-            <Modal isVisible={visible}>
-                <Button
-                    bg="gray400"
-                    h={35}
-                    w={35}
-                    position="absolute"
-                    top={50}
-                    right={15}
-                    rounded="circle"
-                    onPress={() => {
-                        setVisible(false);
-                    }}
-                >
-                    <Icon color="black900" name="close" />
-                </Button>
-                <Stopwatch setVisible={setVisible} value={value} setValue={setValue} />
+            <Overlay visible={overlayVisible} p="xl" onBackdropPress={() => setOverlayVisible(!overlayVisible)}>
+                {!!isLoading ? (
+                    <>
+                        <ActivityIndicator />
+                        <Text mt="md">Loading...</Text>
+                    </>
+                ) : (
+                    <Div>
+                        <Text fontSize={16} fontWeight='500'>Sudah yakin dengan data yang akan di input ?</Text>
+                        <Div row justifyContent='space-around' mt={20}>
+                            <Button onPress={handleSubmit} w={widthPercentageToDP(30)} bg={COLOR_GREEN}>Submit</Button>
+                            <Button onPress={() => setOverlayVisible(!overlayVisible)} w={widthPercentageToDP(30)} bg={COLOR_DISABLED}>Batal</Button>
+                        </Div>
+                    </Div>
+                )}
+            </Overlay>
+            <Modal isVisible={visible} >
+                <Div flex={1} bg='white'>
+                    <Button
+                        bg="gray400"
+                        h={35}
+                        w={35}
+                        position="absolute"
+                        top={50}
+                        right={15}
+                        rounded="circle"
+                        onPress={() => {
+                            setVisible(false);
+                        }}
+                    >
+                        <Icon name="close" />
+                    </Button>
+                    <Stopwatch setVisible={setVisible} value={value} setValue={setValue} />
+                </Div>
             </Modal>
         </>
     )

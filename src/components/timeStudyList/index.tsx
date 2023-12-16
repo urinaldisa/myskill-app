@@ -9,8 +9,6 @@ import formatDuration from '../../helper/timeFormatter'
 const TimeStudyList = () => {
     const { data, refetch, isLoading } = useGetIEList({});
     const dataList = data?.pages.flatMap((page) => page.data);
-
-    console.log(dataList)
     const renderItem = ({item}:any) => {
     return (
         <Div rounded={10} justifyContent='space-between' alignItems='center' px={15} row w={widthPercentageToDP(90)} mb={10} alignSelf='center' h={heightPercentageToDP(10)} bg='#E3E9FC'>

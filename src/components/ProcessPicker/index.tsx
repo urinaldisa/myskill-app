@@ -25,7 +25,9 @@ const ProcessPicker = ({ value, onSelect, styleId, disabled }: PropTypes) => {
     const processData = dataList?.pages.flatMap((page) => page.data);
     const found = processData?.find((e) => e.id === value?.id);
     useEffect(() => {
-        refetch()
+        if(!!styleId){
+            refetch()
+        }
     },[styleId])
     return (
         <Div mt={20}>

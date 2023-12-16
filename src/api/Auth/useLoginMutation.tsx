@@ -22,7 +22,7 @@ const useLoginMutation = () => {
       .then((res) => {
         onLogin(res.data.data.token.plain_text_token)
         onSetProfile(res.data.data.user)
-        router.push('/Main')
+        router.replace('/Main')
       })
       .catch((err) => {
         console.log(err)

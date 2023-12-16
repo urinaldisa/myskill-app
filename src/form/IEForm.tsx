@@ -9,9 +9,9 @@ import StylePicker from '../components/StylePicker'
 
 const IEForm = () => {
     const router = useRouter()
-    const [operator, setOperator] = useState<any>({})
-    const [style, setStyle] = useState<any>({})
-    const [proses, setProses] = useState<any>({})
+    const [operator, setOperator] = useState<any>(null)
+    const [style, setStyle] = useState<any>(null)
+    const [proses, setProses] = useState<any>(null)
     const [rating, setRating] = useState('100')
     const [allowance, setAllowance] = useState("0")
     const [date, setDate] = useState<any>()
@@ -44,7 +44,7 @@ const IEForm = () => {
                 <Text mb={10} fontWeight='500'>Date</Text>
                 <Datepicker placeholder='Select Date' onSelect={(val) => setDate(val)} value={date} />
             </Div>
-            <Button disabled={operator === "" || style === "" || rating === "" || allowance === "" ? true : false} onPress={() => router.push({
+            <Button disabled={!operator ? true : !style ? true : !proses ? true : rating === "" ? true : allowance === "" ? true : !date ? true : false} onPress={() => router.push({
                 pathname: '/Main/IEmain', params: {
                     operator: operator?.name,
                     operatorId: operator?.id,

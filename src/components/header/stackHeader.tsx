@@ -1,7 +1,7 @@
 import React from 'react'
 import { Div, Text } from 'react-native-magnus'
 import { heightPercentageToDP } from 'react-native-responsive-screen'
-import { SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native'
 import { COLOR_PRIMARY } from '../../helper/theme'
 
 const StackHeader = ({label}:any) => {

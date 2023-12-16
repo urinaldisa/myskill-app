@@ -14,11 +14,11 @@ const CycleList = ({ value, setValue }: any) => {
         const handleQtyChange = (event: any, index: any) => {
             const newQty = parseInt(event);
             setValue((prevItems: any) => {
-              const updatedDiscounts = [...prevItems];
-              updatedDiscounts[index] = { ...updatedDiscounts[index], qty: newQty };
-              return updatedDiscounts;
+                const updatedDiscounts = [...prevItems];
+                updatedDiscounts[index] = { ...updatedDiscounts[index], qty: newQty };
+                return updatedDiscounts;
             });
-          };
+        };
         return (
             <Div p={20} bg='#F4FAFF'>
                 <Div row justifyContent='space-between' borderBottomWidth={0.5} borderColor='#c4c4c4' >
@@ -27,7 +27,7 @@ const CycleList = ({ value, setValue }: any) => {
                         <Text fontWeight='600'>{formattedDuration}</Text>
                     </Div>
                     <Div row mb={10}>
-                        <Input value={item?.qty} defaultValue={item?.qty?.toString()} onChangeText={(e) => handleQtyChange(e, index)}  keyboardType='numeric' prefix={(
+                        <Input value={item?.qty} defaultValue={item?.qty?.toString()} onChangeText={(e) => handleQtyChange(e, index)} keyboardType='numeric' prefix={(
                             <Div pr={5} borderColor='#c4c4c4' borderRightWidth={1}>
                                 <Text>Qty</Text>
                             </Div>
@@ -54,7 +54,10 @@ const CycleList = ({ value, setValue }: any) => {
                 <Text fontSize={16} fontWeight='600'>CYCLE TIME</Text>
                 <Text mb={10} fontSize={14} color='#929292'>Then start the to calculate your work</Text>
             </Div>
-            <FlatList bounces={false} data={value || []} renderItem={renderItem} />
+            <FlatList
+                keyExtractor={(_, idx: number) => idx.toString()}
+                bounces={false} data={value || []}
+                renderItem={renderItem} />
         </Div>
     )
 }

@@ -1,13 +1,17 @@
+import { router } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
 import StopwatchTimer, { StopwatchTimerMethods } from 'react-native-animated-stopwatch-timer';
-import { Div, Icon, Text } from 'react-native-magnus';
+import { Div, Icon, Overlay, Text } from 'react-native-magnus';
 import { heightPercentageToDP } from 'react-native-responsive-screen';
+import { useRecoilState } from 'recoil';
 import { COLOR_PRIMARY } from '../../helper/theme';
+import LoadActivity from '../../providers/atoms/activityLoad';
 
 const Stopwatch = ({ value, setValue, setVisible }: any) => {
     const [statePause, setStatePause] = useState(false)
     const stopwatchRef = useRef<StopwatchTimerMethods>(null);
+    const [activityLoad, setActivityLoad] = useRecoilState(LoadActivity)
     // Methods to control the stopwatch
     function play() {
         stopwatchRef.current?.play();
@@ -93,7 +97,7 @@ const Stopwatch = ({ value, setValue, setVisible }: any) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                     handleButtonClick()
-                    setVisible(false)
+                    router.back()
                 }}>
                     <Div alignItems='center' justifyContent='center'>
                         <Icon
@@ -119,6 +123,7 @@ const Stopwatch = ({ value, setValue, setVisible }: any) => {
                     </Div>
                 </TouchableOpacity>
             </Div>
+
         </Div>
     )
 }
