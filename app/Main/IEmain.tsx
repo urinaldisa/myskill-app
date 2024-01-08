@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FlatList, Pressable } from 'react-native'
-import { Button, Div, Icon, Input, Text } from 'react-native-magnus'
+import { Div, Icon, Input, Text } from 'react-native-magnus'
 import { widthPercentageToDP } from 'react-native-responsive-screen'
 import { useRecoilState } from 'recoil'
 import BottomTab from '../../src/components/bottomTab'
 import StackHeader from '../../src/components/header/stackHeader'
 import IEData from '../../src/components/IEData'
-import Loading from '../../src/components/Loading'
 import formatDuration from '../../src/helper/timeFormatter'
 import LoadActivity from '../../src/providers/atoms/activityLoad'
-import useStorageState from '../../src/providers/useStorageState'
 
 const IEinput2step = () => {
   const [visible, setVisible] = useState(false);

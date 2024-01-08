@@ -10,7 +10,6 @@ import MachineDowntimePicker from '../../src/components/MachineDowntimePicker'
 const Maintenance = () => {
   const [machine, setMachine] = useState("")
   const { id} = useLocalSearchParams();
-  console.warn(id)
   return (
     <>
       <Div flex={1} bg='white'>

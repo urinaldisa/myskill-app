@@ -58,13 +58,13 @@ export default ({
       <Div style={style}>
         <Button
           block={block}
-          borderWidth={1}
-          bg="white"
+          borderWidth={0.2}
+          bg="#F5F8FA"
           color={dateColor ? "#000" : COLOR_PRIMARY}
           fontSize={11}
           py={13}
-          w={widthButton}
-          borderColor={borderColor}
+          w={"100%"}
+          borderColor="#cbd5e0"
           justifyContent="space-between"
           onPress={() => setShowDatePicker(true)}
           disabled={disabled}

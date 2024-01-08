@@ -5,18 +5,17 @@ import { Button, Div, Text } from 'react-native-magnus';
 import { widthPercentageToDP } from 'react-native-responsive-screen';
 import useLoginMutation from '../../src/api/Auth/useLoginMutation';
 
-
+// "ghon.doks@gmail.com"
 const VerificationCode = () => {
   const { mutateAsync , isLoading } = useLoginMutation();
   const [pin, setPin] = useState("")
   const { email } = useGlobalSearchParams();
   const handleLogin = () => {
     mutateAsync({
-      email: "ghon.doks@gmail.com",
+      email: "admin@myskill.id",
       password: pin
     })
   }
-  // router.push('/Main')
   return (
     <Div flex={1} bg='white'>
       <Div   flex={1} justifyContent='center'>

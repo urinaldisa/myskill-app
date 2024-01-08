@@ -10,6 +10,7 @@ import StylePicker from '../components/StylePicker'
 const IEForm = () => {
     const router = useRouter()
     const [operator, setOperator] = useState<any>(null)
+    const [userQR, setUserQR] = useState<any>(null)
     const [style, setStyle] = useState<any>(null)
     const [proses, setProses] = useState<any>(null)
     const [rating, setRating] = useState('100')
@@ -21,6 +22,8 @@ const IEForm = () => {
                 <OperatorPicker
                     value={operator}
                     onSelect={(value) => setOperator(value)}
+                    setOperator={setUserQR}
+                    userQR={userQR}
                 />
                 <StylePicker
                     value={style}
@@ -41,13 +44,13 @@ const IEForm = () => {
                         <Input keyboardType='number-pad' placeholder='Input Allowance' value={allowance} onChangeText={(e) => setAllowance(e)} mb={20} w={widthPercentageToDP(45)} />
                     </Div>
                 </Div>
-                <Text mb={10} fontWeight='500'>Date</Text>
-                <Datepicker placeholder='Select Date' onSelect={(val) => setDate(val)} value={date} />
+                {/* <Text mb={10} fontWeight='500'>Date</Text> */}
+                {/* <Datepicker block placeholder='Select Date' onSelect={(val) => setDate(val)} value={date} /> */}
             </Div>
-            <Button disabled={!operator ? true : !style ? true : !proses ? true : rating === "" ? true : allowance === "" ? true : !date ? true : false} onPress={() => router.push({
+            <Button disabled={ !!userQR ? false : !operator ? true : !style ? true : !proses ? true : rating === "" ? true : allowance === "" ? true : !date ? true : false} onPress={() => router.push({
                 pathname: '/Main/IEmain', params: {
-                    operator: operator?.name,
-                    operatorId: operator?.id,
+                    operator: userQR?.name || operator?.name,
+                    operatorId: userQR?.id || operator?.id,
                     style: style?.name,
                     styleId: style?.id,
                     processId: proses?.id,

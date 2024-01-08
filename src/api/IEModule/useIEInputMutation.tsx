@@ -28,7 +28,8 @@ const useIEInputMutation = () => {
        avg: average,
        date: date,
        cycle_times: cycle_time,
-       result: result
+       result: result,
+       style_id: style
       })
       .then((res) => {
         console.log(res)

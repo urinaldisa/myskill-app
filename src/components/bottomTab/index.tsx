@@ -13,7 +13,8 @@ const BottomTab = ({ value, setValue, sumData, visible, setVisible }: any) => {
     const { formattedDuration } = formatDuration(sumData / value.length || 0);
     const [overlayVisible, setOverlayVisible] = useState(false);
     const { mutateAsync, isLoading } = useIEInputMutation();
-    const { operatorId, processId, allowance, date } = useLocalSearchParams();
+    const { operatorId, processId, allowance, date, styleId } = useLocalSearchParams();
+    console.warn(styleId,'style')
     const { formattedDuration: resultTime } = formatDuration((sumData * allowance) / 100 || sumData / value.length || 0);
     const rawData = value.map((e: {
         qty: any; time: string;
@@ -27,6 +28,7 @@ const BottomTab = ({ value, setValue, sumData, visible, setVisible }: any) => {
     const handleSubmit = () => {
         mutateAsync({
             operator: operatorId,
+            style: styleId,
             process: processId,
             allowance: allowance,
             average: formattedDuration,

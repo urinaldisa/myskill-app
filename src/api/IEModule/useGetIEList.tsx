@@ -3,6 +3,7 @@ import {
     UseInfiniteQueryOptions,
     UseInfiniteQueryResult,
   } from "react-query";
+import { standardExtraQueryParam } from "../../helper/pagination";
   import { useAxios } from "../useApi";
   
   interface User {
@@ -18,6 +19,7 @@ import {
     totalPages: number;
     currentPage: number;
   }
+
   
   const useGetIEList = (
     params?: any,
@@ -32,35 +34,17 @@ import {
           .get("ie-input", {
             params: {
               ...params,
+              limit: 10,
+              page: pageParam, // Adjust the page parameter name here
             },
           })
           .then((res) => {
+            console.log(res)
             const data = res.data.data as ApiResponse;
             return data;
-            //DEBT: DOCS RESULT
-            //   return {
-            //     ...data,
-            //     users: data.users.map((user) => ({
-            //       // map the user properties to your own interface here
-            //     })),
-            //   };
           });
       },
-    //   {
-    //     getNextPageParam: (lastQuery, pages) => {
-    //       // Error
-    //       if (lastQuery === undefined) {
-    //         return false;
-    //       }
-  
-    //       const currentPage = lastQuery.meta!.current_page;
-  
-    //       if (!lastQuery.links!.next) return false;
-    //       return currentPage! + 1;
-    //     },
-    //     retry: false,
-    //     ...options,
-    //   }
+      standardExtraQueryParam
     );
   };
   

@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { Alert } from "react-native";
 import { useMutation } from "react-query";
 import { useAuth } from "../../providers/Auth";
 import { useAxios } from "../useApi";
@@ -25,7 +26,8 @@ const useLoginMutation = () => {
         router.replace('/Main')
       })
       .catch((err) => {
-        console.log(err)
+        Alert.alert(err.axiosError.response.data.message)
+        console.log(err.axiosError.response.data.message)
         // toast.error(err.axiosError.response.data.message);
       });
   });

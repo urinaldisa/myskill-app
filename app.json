@@ -2,14 +2,14 @@
   "expo": {
     "name": "skillmath",
     "slug": "skillmath",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/AppIcon.png",
     "scheme": "myskill-app",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
@@ -20,10 +20,7 @@
     },
     "android": {
       "package": "com.myskill.math",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
+      "versionCode": 2,
       "permissions": [
         "CAMERA",
         "READ_PHONE_STATE",
@@ -37,7 +34,13 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+        }
+      ]
     ],
     "extra": {
       "router": {
