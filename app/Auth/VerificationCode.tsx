@@ -13,7 +13,7 @@ const VerificationCode = () => {
   const handleLogin = () => {
     mutateAsync({
       email: "admin@myskill.id",
-      password: pin
+      password: "123456"
     })
   }
   return (
